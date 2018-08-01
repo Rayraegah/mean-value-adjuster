@@ -26,14 +26,14 @@ from statistics import mean, stdev
 
 class Adjuster:
     def __init__(self, ls=[0]):
-        self.ls = ls
+        self.votes = ls
 
     def _apply_weight(self):
-        mn = mean(self.ls)
-        sd = stdev(self.ls)
+        mn = mean(self.votes)
+        sd = stdev(self.votes)
         weights = []
 
-        for x in self.ls:
+        for x in self.votes:
             z_score = (x - mn) / sd if sd is not 0 else 0
             weight = cos(z_score)
 
@@ -45,7 +45,7 @@ class Adjuster:
         return weights
 
     def get_true_mean(self):
-        return mean(self.ls)
+        return mean(self.votes)
 
     def get_adjusted_mean(self):
         weights = self._apply_weight()
